@@ -3,6 +3,9 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# trainning dataset
+WA_Fn-UseC_-Telco-Customer-Churn.csv
+
 # C extensions
 *.so
 
