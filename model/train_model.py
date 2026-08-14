@@ -24,10 +24,11 @@ df = pd.read_csv('WA_Fn-UseC_-Telco-Customer-Churn.csv')
 #df.head()
 
 print("\n--- Data Info & Types ---")
-display(df.info())
+#display(df.info())
+print(df.info())
 
-display("Statistical Summary for all Numerical Columns")
-display(df.describe())
+print("Statistical Summary for all Numerical Columns")
+print(df.describe())
 
 # 2. Preprocessing
 # Drop customerID as it's not a useful feature
