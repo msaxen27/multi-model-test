@@ -8,17 +8,23 @@ st.set_page_config(page_title="ML model Classification App", layout="wide")
 st.title("Machine Learning model Classification App")
 st.markdown("Demonstrating 5 Machine Learning Models on the Telco Customer Churn Dataset.")
 
-# Load Test Data and Metrics
+# Load Test Data and Metrics (paths resolved relative to this file)
+BASE_DIR = os.path.dirname(__file__)
+
+
 @st.cache_data
 def load_data():
-    test_df = pd.read_csv('test_data.csv')
-    metrics_df = pd.read_csv('model/metrics.csv')
+    test_path = os.path.join(BASE_DIR, 'test_data.csv')
+    metrics_path = os.path.join(BASE_DIR, 'model', 'metrics.csv')
+    test_df = pd.read_csv(test_path)
+    metrics_df = pd.read_csv(metrics_path)
     return test_df, metrics_df
 
 try:
     test_data, metrics_df = load_data()
-except FileNotFoundError:
+except FileNotFoundError as e:
     st.error("Data files not found. Run the training script first to generate the necessary files.")
+    st.error(f"Attempted paths:\n test_data: {os.path.join(BASE_DIR, 'test_data.csv')}\n metrics: {os.path.join(BASE_DIR, 'model', 'metrics.csv')}")
     st.stop()
 
 # Sidebar: Select the Model from the list of available models
@@ -56,7 +62,7 @@ st.dataframe(sample)
 
 # Load the corresponding saved model
 model_filename = selected_model.replace(" ", "_").lower() + '.pkl'
-model_path = os.path.join('model', model_filename)
+model_path = os.path.join(BASE_DIR, 'model', model_filename)
 
 if st.button("Predict"):
     if os.path.exists(model_path):
