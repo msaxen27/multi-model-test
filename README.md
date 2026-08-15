@@ -42,12 +42,12 @@ Feature Categories:
 
 | ML Model Name | Observation about model performance |
 | :--- | :--- |
-| **Logistic Regression** | Achieved the highest overall AUC score (0.830738), indicating superior class separation capability. It offers strong balanced performance across accuracy and precision. |
-| **Decision Tree** | Tied for highest accuracy (0.788202) and highest precision (0.642857). However, low recall (0.457219) means it misses more than 54% of actual customer churn cases. |
-| **kNN** | The weakest overall model across most metrics (AUC: 0.756661, MCC: 0.332405). Highly sensitive to feature density and distance metrics despite standardization. |
-| **Naive Bayes** | Highest Recall (0.727273), F1 Score (0.595838), and MCC (0.426012). Highly effective at minimizing False Negatives by detecting nearly 73% of all churning customers. |
-| **Random Forest (Ensemble)** | Tied with Decision Tree for highest accuracy (0.788202) while showing improved recall (0.478610) and F1 score (0.545732). Offers high stability and lower variance. |
-| **Overall Winner for your dataset?** | **Naive Bayes** is the business winner for customer churn, as high **Recall (0.727273)** ensures the company identifies the maximum number of churning customers. Alternatively, **Logistic Regression** serves as the best general-purpose model with the highest **AUC Score (0.830738)**. |
+| **Logistic Regression** | With the highest overall AUC score (0.830738) logistic regression model indicates a superior class separation capability. It also offers strong balanced performance across accuracy and precision. |
+| **Decision Tree** | With this model we were able to get the highest accuracy (0.788202) and highest precision (0.642857). However, low recall value (0.457219) means it missed more than 54% of actual customer churn cases. |
+| **kNN** | This is the weakest overall model across most metrics (AUC: 0.756661, MCC: 0.332405). Highly sensitive to feature density and distance metrics despite standardization. |
+| **Naive Bayes** | With highest Recall (0.727273), F1 Score (0.595838), and MCC (0.426012), we can say that this model was highly effective at minimizing False Negatives by detecting nearly 73% of all churning customers. |
+| **Random Forest (Ensemble)** | This model ties with Decision Tree for highest accuracy (0.788202) while showing improved recall (0.478610) and F1 score (0.545732). Thus offering higher stability and lower variance. |
+| **Overall Winner for your dataset?** | **Naive Bayes** is the overall winner in terms of business point of view for customer churn, as high **Recall (0.727273)** value ensures that the company will be able to identify maximum number of churning customers. Alternatively, **Logistic Regression** serves as the best general-purpose model with the highest **AUC Score (0.830738)**. |
 
 ## How to run locally
 1. `pip install -r requirements.txt`
