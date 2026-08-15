@@ -36,21 +36,117 @@ selected_model = st.sidebar.selectbox("Choose a Classification Model", model_nam
 st.header(f"Performance Metrics: {selected_model}")
 model_metrics = metrics_df[metrics_df['Model'] == selected_model].iloc[0]
 
-col1, col2, col3 = st.columns(3)
-col1.metric("Accuracy", f"{model_metrics['Accuracy']:.4f}")
-col2.metric("AUC Score", f"{model_metrics['AUC Score']:.4f}")
-col3.metric("Precision", f"{model_metrics['Precision']:.4f}")
+# Render metrics as circular translucent green bubbles using inline CSS
+bubble_css = """
+<style>
+.metrics-row {display:flex; gap:18px; margin:16px 0 8px 0;}
+.metric-bubble {
+    width:140px; height:140px; border-radius:50%;
+    background: rgba(16,185,129,0.12);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    box-shadow: 0 6px 18px rgba(6,95,70,0.08);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+.metric-value { font-size:20px; font-weight:700; color:#ffffff; }
+.metric-label { font-size:12px; color:#F54927; opacity:0.95; margin-top:6px; }
+@media (max-width:700px){ .metrics-row {flex-wrap:wrap; justify-content:center;} .metric-bubble{width:110px;height:110px;} }
+</style>
+"""
 
-col4, col5, col6 = st.columns(3)
-col4.metric("Recall", f"{model_metrics['Recall']:.4f}")
-col5.metric("F1 Score", f"{model_metrics['F1 Score']:.4f}")
-col6.metric("MCC Score", f"{model_metrics['MCC Score']:.4f}")
+st.markdown(bubble_css, unsafe_allow_html=True)
+
+widget_css = """
+<style>
+/* Predict button */
+.stButton > button {
+  background: linear-gradient(180deg,#3b82f6,#2563eb) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 6px 18px rgba(37,99,235,0.18) !important;
+  border-radius: 8px !important;
+  padding: 8px 18px !important;
+  font-weight:600 !important;
+}
+.stButton > button:hover {
+  filter: brightness(0.95) !important;
+}
+
+/* Sidebar selectbox dropdown */
+.stSelectbox > div > div,
+[data-baseweb="select"] > div,
+[data-baseweb="select"] > div > div {
+  background: linear-gradient(180deg, #3D6B8F 0%, #82B3AA 100%) !important;
+  border: 1px solid #60a5fa !important;
+  border-radius: 8px !important;
+  color: #0f172a !important;
+  box-shadow: 0 4px 12px rgba(37,99,235,0.10) !important;
+}
+
+.stSelectbox > div > div > div,
+[data-baseweb="select"] span,
+[data-baseweb="select"] div {
+  color: #0f172a !important;
+}
+
+/* Ensure width looks good */
+.stSelectbox > div > div {
+  width: 220px !important;
+}
+
+/* Force visible blue selected area */
+div[data-baseweb="select"] > div[role="button"] {
+  background: linear-gradient(180deg, #3D6B8F 0%, #82B3AA 100%) !important;
+}
+</style>
+"""
+
+st.markdown(widget_css, unsafe_allow_html=True)
+
+acc = f"{model_metrics['Accuracy']:.4f}"
+auc = f"{model_metrics['AUC Score']:.4f}"
+prec = f"{model_metrics['Precision']:.4f}"
+rec = f"{model_metrics['Recall']:.4f}"
+f1 = f"{model_metrics['F1 Score']:.4f}"
+mcc = f"{model_metrics['MCC Score']:.4f}"
+
+metrics_html = f"""
+<div class="metrics-row">
+    <div class="metric-bubble">
+        <div class="metric-value">{acc}</div>
+        <div class="metric-label">Accuracy</div>
+    </div>
+    <div class="metric-bubble">
+        <div class="metric-value">{auc}</div>
+        <div class="metric-label">AUC Score</div>
+    </div>
+    <div class="metric-bubble">
+        <div class="metric-value">{prec}</div>
+        <div class="metric-label">Precision</div>
+    </div>
+</div>
+<div class="metrics-row">
+    <div class="metric-bubble">
+        <div class="metric-value">{rec}</div>
+        <div class="metric-label">Recall</div>
+    </div>
+    <div class="metric-bubble">
+        <div class="metric-value">{f1}</div>
+        <div class="metric-label">F1 Score</div>
+    </div>
+    <div class="metric-bubble">
+        <div class="metric-value">{mcc}</div>
+        <div class="metric-label">MCC Score</div>
+    </div>
+</div>
+"""
+
+st.markdown(metrics_html, unsafe_allow_html=True)
 
 st.divider()
 
 # 2. Interactive Prediction
-st.header("Interactive Prediction")
-st.write("Because this dataset has 19 features after preprocessing, selecting a sample from our test data is the easiest way to test the models interactively.")
+st.header("Churn Prediction")
+st.write("Select a sample from the test data to check different models predictions interactively.")
 
 # Slider to pick a row from test_data
 sample_index = st.slider("Select a Row Index from Test Data", 0, len(test_data) - 1, 0)
